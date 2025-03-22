@@ -94,13 +94,11 @@ class User(BaseModel):
 
     isOnline: bool
     isAdmin: bool
-    isGlobalAdmin: bool
     isForbidden: bool
     isDeleted: bool
 
     createdTime: datetime | None
     updatedTime: datetime | None
-
 
     def from_token_dict(token_dict: dict):
         token_dict['createdTime'] = str2datetime(token_dict['createdTime'])
