@@ -92,6 +92,8 @@ class User(BaseModel):
     permissions: list[str]
     tag: str
 
+    language: str | None
+
     isOnline: bool
     isAdmin: bool
     isForbidden: bool
