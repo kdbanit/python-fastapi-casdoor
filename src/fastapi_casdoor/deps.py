@@ -3,13 +3,20 @@ from typing import Annotated
 
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
+from fastapi.requests import Request
+from fastapi.websockets import WebSocket
 
 from .context import current_user_context
 from .validators import validate_user_by_token
 from .models import User
 
 
-security = HTTPBearer()
+class CustomHTTPBearer(HTTPBearer):
+    async def __call__(self, request: Request = None, websocket: WebSocket = None):
+        return await super().__call__(request or websocket)
+
+
+security = CustomHTTPBearer()
 
 
 async def get_current_user_or_none_without_check(credentials: Annotated[HTTPAuthorizationCredentials, Depends(security)]):
